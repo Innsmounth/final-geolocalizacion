@@ -1,5 +1,6 @@
 package proyecto.hdp;
 
+import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,17 +18,40 @@ public class UsuarioTest {
 	public void contextLoads() {
 	}
         
-        @Test
+       // @Test
         public void guardar(){
         //Aqui pondremos la logica de guardar un usuario
         //Generamos un objeto
         
         Usuario u = new Usuario();
         Posicion pos = new Posicion();
-        //Mensaje mensa new Mensaje();
+        Mensaje mensa = new Mensaje();
         
         
-        Assert.assertEquals(4, 2+2);
+        //generamos un usuario con todos los atributos incluyendo
+        //un mensaje y una posicion
+        
+        pos.setLat(19.90);
+        pos.setLon(100.0);
+        
+        mensa.setContenido("Primer mensaje");
+        
+        u.setEmail("yomiloco@hotmail.com");
+        ArrayList<Mensaje> mensajes = new ArrayList<>();
+        mensajes.add(mensa);
+        u.setMensajes(mensajes);
+        u.setPassword("pass");
+        u.setNickname("Innsmounth");
+        u.setPosicion(pos);
+        
+        u.setId("primero");
+        
+        
+        
+        
+        Usuario guardado = repo.save(u);
+        Assert.assertEquals(guardado,u);
+        //Assert.assertEquals(4, 2+2);
         
            
         }
@@ -44,12 +68,23 @@ public class UsuarioTest {
         
         @Test
         public void buscarTodos(){
-        Assert.assertEquals(4, 2+2);
+            /*int tamano = repo.findAll().size();
+            
+            
+        Assert.assertEquals(1,tamano);*/
+            
+            Usuario encontrado = repo.findAll().get(0);
+            Assert.assertEquals("primero", encontrado.getId());
         }
         
-        @Test
+       // @Test
         public void buscarPorId(){
-        Assert.assertEquals(4, 2+2);
+        
+            Usuario usuarioBuscado = repo.findById("primero").get();
+          
+            
+            
+        Assert.assertEquals("primero",usuarioBuscado.getId());
         }
 
 }
